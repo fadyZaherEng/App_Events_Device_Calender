@@ -52,13 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 _addEventToCalender(context);
               },
-              child: const Text(
-                "Add Event To Calender",
-              ),
+              child: const Text("Add Event To Calender"),
             ),
-            const SizedBox(
-              height: 5,
-            ),
+            const SizedBox(height: 5),
             Text(
               eventID,
               style: const TextStyle(
@@ -67,20 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             TextButton(
               onPressed: () {
                 removeEventFromCalender(context);
               },
-              child: const Text(
-                "remove Event from Calender",
-              ),
+              child: const Text("remove Event from Calender"),
             ),
-            const SizedBox(
-              height: 5,
-            ),
+            const SizedBox(height: 5),
             Text(
               removeStatus == true
                   ? "Event Remove Status is: $removeStatus"

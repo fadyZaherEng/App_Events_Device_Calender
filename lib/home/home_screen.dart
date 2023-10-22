@@ -1,5 +1,4 @@
 // ignore_for_file: depend_on_referenced_packages, unnecessary_null_comparison
-
 import 'package:device_calendar/device_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';

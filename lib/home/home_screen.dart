@@ -109,15 +109,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 description: "Meeting Tomorrow",
                 start: TZDateTime.from(
                   DateTime(2023, 10, 23, 4),
-                  getLocation(
-                    await FlutterNativeTimezone.getLocalTimezone(),
-                  ),
+                  getLocation(await FlutterNativeTimezone
+                      .getLocalTimezone()), //"Africa/Cairo",
                 ),
                 end: TZDateTime.from(
                   DateTime(2023, 10, 23, 5),
-                  getLocation(
-                    await FlutterNativeTimezone.getLocalTimezone(),
-                  ),
+                  getLocation(await FlutterNativeTimezone
+                      .getLocalTimezone()), //"Africa/Cairo",
                 ),
                 allDay: true,
               ),

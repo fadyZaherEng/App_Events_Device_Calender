@@ -120,8 +120,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 allDay: true,
               ),
             );
-            _eventID = result!.data.toString();
-            setState(() {});
+            setState(() {
+              _eventID = result!.data.toString();
+            });
           }
         }
       } else {
@@ -137,8 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
       _eventID,
     )
         .then((value) {
-      _removeStatus = value.data!;
-      setState(() {});
+      setState(() {
+        _removeStatus = value.data!;
+      });
     });
   }
 }

@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               Text(
                 _eventID,
                 style: const TextStyle(
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  _removeEventFromCalender();
+                  _removeEventFromCalender(_eventID);
                 },
                 child: const Text(
                   "Remove Event From Calender",
@@ -77,21 +77,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               Text(
                 _removeStatus == true
                     ? "Event Remove Status is: $_removeStatus"
                     : "",
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 16,
                   color: Colors.black,
                 ),
               ),
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  _updateEventFromCalender(_eventID);
+                  _updateEventFromCalender();
                 },
                 child: const Text(
                   "Update Event From Calender",
@@ -101,16 +101,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               Text(
                 _updateStatus == true
-                    ? "Event Update Status is: $_removeStatus"
+                    ? "Event Update Status is: $_updateStatus"
                     : "Updated: $_updateStatus",
                 style: TextStyle(
                   fontWeight: _updateStatus == false
                       ? FontWeight.normal
                       : FontWeight.bold,
-                  fontSize: _updateStatus == false ? 13 : 20,
+                  fontSize: _updateStatus == false ? 13 : 16,
                   color: _updateStatus == false ? Colors.grey : Colors.black,
                 ),
               ),
@@ -163,11 +163,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _removeEventFromCalender() async {
+  void _removeEventFromCalender(String eventId) async {
     _deviceCalendarPlugin
         .deleteEvent(
       _calenderID,
-      _eventID,
+      eventId,
     )
         .then((value) {
       setState(() {
@@ -178,43 +178,37 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _updateEventFromCalender(String eventId) async {
-    if (eventId != "") {
-      final calendars = await _deviceCalendarPlugin.retrieveCalendars();
-      if (calendars.isSuccess && calendars.data!.isNotEmpty) {
-        Calendar calender = calendars.data!.first;
-        if (calender != null) {
-          _deviceCalendarPlugin
-              .createOrUpdateEvent(
-            Event(
-              calender.id,
-              eventId: eventId,
-              title: "Appointment",
-              description: "Meeting Tomorrow",
-              start: TZDateTime.from(
-                DateTime(2023, 10, 23, 4),
-                getLocation(await FlutterNativeTimezone
-                    .getLocalTimezone()), //"Africa/Cairo",
-              ),
-              end: TZDateTime.from(
-                DateTime(2023, 10, 23, 5),
-                getLocation(await FlutterNativeTimezone
-                    .getLocalTimezone()), //"Africa/Cairo",
-              ),
-              allDay: true,
-            ),
-          )
-              .then((result) {
-            setState(() {
-              _calenderID = calender.id.toString();
-              _eventID = result!.data.toString();
-              _updateStatus = true;
-            });
-          }).catchError((onError) {
-            print(onError.toString());
-          });
-        }
-      }
+  void _updateEventFromCalender() async {
+    String tempEventId = _eventID;
+    if (_eventID != "" && _calenderID != "") {
+      _deviceCalendarPlugin
+          .createOrUpdateEvent(
+        Event(
+          _calenderID,
+          title: "Appointment Updated ",
+          description: "Meeting Tomorrow Updated",
+          start: TZDateTime.from(
+            DateTime(2023, 10, 24, 4),
+            getLocation(await FlutterNativeTimezone
+                .getLocalTimezone()), //"Africa/Cairo",
+          ),
+          end: TZDateTime.from(
+            DateTime(2023, 10, 24, 5),
+            getLocation(await FlutterNativeTimezone
+                .getLocalTimezone()), //"Africa/Cairo",
+          ),
+          allDay: true,
+        ),
+      )
+          .then((result) {
+        setState(() {
+          _eventID = result!.data.toString();
+          _updateStatus = true;
+          _removeEventFromCalender(tempEventId);
+        });
+      }).catchError((onError) {
+        print(onError.toString());
+      });
     } else {
       setState(() {
         _updateStatus = false;

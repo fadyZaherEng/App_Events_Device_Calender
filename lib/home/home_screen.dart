@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text(
           "Device Calender",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),

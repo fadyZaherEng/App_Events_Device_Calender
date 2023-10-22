@@ -5,7 +5,6 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }

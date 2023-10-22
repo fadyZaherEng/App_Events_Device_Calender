@@ -32,55 +32,63 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        elevation: 10,
       ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextButton(
-              onPressed: () {
-                _addEventToCalender(context);
-              },
-              child: const Text(
-                "Add Event To Calender",
-                style: TextStyle(
+      body: Padding(
+        padding: const EdgeInsets.all(50.0),
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  _addEventToCalender(context);
+                },
+                child: const Text(
+                  "Add Event To Calender",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                _eventID,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                   color: Colors.black,
                 ),
               ),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              _eventID,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.black,
+              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  _removeEventFromCalender(context);
+                },
+                child: const Text(
+                  "Remove Event From Calender",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            TextButton(
-              onPressed: () {
-                _removeEventFromCalender(context);
-              },
-              child: const Text(
-                "Remove Event From Calender",
-                style: TextStyle(
+              const SizedBox(height: 5),
+              Text(
+                _removeStatus == true
+                    ? "Event Remove Status is: $_removeStatus"
+                    : "",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                   color: Colors.black,
                 ),
               ),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              _removeStatus == true
-                  ? "Event Remove Status is: $_removeStatus"
-                  : "",
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.black,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

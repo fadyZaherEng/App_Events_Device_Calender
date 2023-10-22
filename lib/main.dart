@@ -33,11 +33,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String eventID = "";
+  String _eventID = "";
 
-  String calenderID = "";
+  String _calenderID = "";
 
-  bool removeStatus = false;
+  bool _removeStatus = false;
 
   final DeviceCalendarPlugin _deviceCalendarPlugin = DeviceCalendarPlugin();
 
@@ -52,11 +52,16 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 _addEventToCalender(context);
               },
-              child: const Text("Add Event To Calender"),
+              child: const Text(
+                "Add Event To Calender",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
             ),
             const SizedBox(height: 5),
             Text(
-              eventID,
+              _eventID,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
@@ -68,12 +73,17 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 removeEventFromCalender(context);
               },
-              child: const Text("remove Event from Calender"),
+              child: const Text(
+                "Remove Event From Calender",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
             ),
             const SizedBox(height: 5),
             Text(
-              removeStatus == true
-                  ? "Event Remove Status is: $removeStatus"
+              _removeStatus == true
+                  ? "Event Remove Status is: $_removeStatus"
                   : "",
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -93,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
         final calendars = await _deviceCalendarPlugin.retrieveCalendars();
         if (calendars.isSuccess && calendars.data!.isNotEmpty) {
           Calendar calender = calendars.data!.first;
-          calenderID = calender.id.toString();
+          _calenderID = calender.id.toString();
           if (calender != null) {
             Result? result = await _deviceCalendarPlugin.createOrUpdateEvent(
               Event(
@@ -115,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 allDay: true,
               ),
             );
-            eventID = result!.data.toString();
+            _eventID = result!.data.toString();
             setState(() {});
           }
         }
@@ -128,11 +138,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void removeEventFromCalender(BuildContext context) async {
     _deviceCalendarPlugin
         .deleteEvent(
-      calenderID,
-      eventID,
+      _calenderID,
+      _eventID,
     )
         .then((value) {
-      removeStatus = value.data!;
+      _removeStatus = value.data!;
       setState(() {});
     });
   }

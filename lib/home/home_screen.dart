@@ -106,10 +106,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 _updateStatus == true
                     ? "Event Update Status is: $_removeStatus"
                     : "Updated: $_updateStatus",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.black,
+                style: TextStyle(
+                  fontWeight: _updateStatus == false
+                      ? FontWeight.normal
+                      : FontWeight.bold,
+                  fontSize: _updateStatus == false ? 13 : 20,
+                  color: _updateStatus == false ? Colors.grey : Colors.black,
                 ),
               ),
             ],

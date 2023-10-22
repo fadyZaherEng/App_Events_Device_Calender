@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, unnecessary_null_comparison
+// ignore_for_file: depend_on_referenced_packages, unnecessary_null_comparison, avoid_print
 import 'package:device_calendar/device_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
@@ -99,9 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
         final calendars = await _deviceCalendarPlugin.retrieveCalendars();
         if (calendars.isSuccess && calendars.data!.isNotEmpty) {
           Calendar calender = calendars.data!.first;
-          _calenderID = calender.id.toString();
           if (calender != null) {
-            Result? result = await _deviceCalendarPlugin.createOrUpdateEvent(
+            _deviceCalendarPlugin
+                .createOrUpdateEvent(
               Event(
                 calender.id,
                 title: "Appointment",
@@ -118,9 +118,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 allDay: true,
               ),
-            );
-            setState(() {
-              _eventID = result!.data.toString();
+            )
+                .then((result) {
+              setState(() {
+                _calenderID = calender.id.toString();
+                _eventID = result!.data.toString();
+              });
+            }).catchError((onError) {
+              print(onError.toString());
             });
           }
         }
@@ -140,6 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _removeStatus = value.data!;
       });
+    }).catchError((onError) {
+      print(onError.toString());
     });
   }
 }

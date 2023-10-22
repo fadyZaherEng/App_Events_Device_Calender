@@ -64,14 +64,14 @@ class _HomeScreenState extends State<HomeScreen> {
               _eventID,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 22,
+                fontSize: 20,
                 color: Colors.black,
               ),
             ),
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
-                removeEventFromCalender(context);
+                _removeEventFromCalender(context);
               },
               child: const Text(
                 "Remove Event From Calender",
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   : "",
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 22,
+                fontSize: 20,
                 color: Colors.black,
               ),
             ),
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void removeEventFromCalender(BuildContext context) async {
+  void _removeEventFromCalender(BuildContext context) async {
     _deviceCalendarPlugin
         .deleteEvent(
       _calenderID,

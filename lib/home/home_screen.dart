@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 _updateStatus == true
                     ? "Event Update Status is: $_removeStatus"
-                    : "",
+                    : "Updated: $_updateStatus",
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -214,8 +214,9 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }
     } else {
-      _updateStatus = false;
-      print(_updateStatus);
+      setState(() {
+        _updateStatus = false;
+      });
     }
   }
 }

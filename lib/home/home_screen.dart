@@ -17,6 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool _removeStatus = false;
 
+  bool _updateStatus = false;
+
   final DeviceCalendarPlugin _deviceCalendarPlugin = DeviceCalendarPlugin();
 
   @override
@@ -43,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               TextButton(
                 onPressed: () {
-                  _addEventToCalender(context);
+                  _addEventToCalender();
                 },
                 child: const Text(
                   "Add Event To Calender",
@@ -65,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  _removeEventFromCalender(context);
+                  _removeEventFromCalender();
                 },
                 child: const Text(
                   "Remove Event From Calender",
@@ -86,6 +88,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.black,
                 ),
               ),
+              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  _updateEventFromCalender(_eventID);
+                },
+                child: const Text(
+                  "Update Event From Calender",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                _updateStatus == true
+                    ? "Event Update Status is: $_removeStatus"
+                    : "",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
         ),
@@ -93,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _addEventToCalender(BuildContext context) async {
+  void _addEventToCalender() async {
     _deviceCalendarPlugin.requestPermissions().then((value) async {
       if (value.data!) {
         final calendars = await _deviceCalendarPlugin.retrieveCalendars();
@@ -135,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _removeEventFromCalender(BuildContext context) async {
+  void _removeEventFromCalender() async {
     _deviceCalendarPlugin
         .deleteEvent(
       _calenderID,
@@ -148,5 +174,48 @@ class _HomeScreenState extends State<HomeScreen> {
     }).catchError((onError) {
       print(onError.toString());
     });
+  }
+
+  void _updateEventFromCalender(String eventId) async {
+    if (eventId != "") {
+      final calendars = await _deviceCalendarPlugin.retrieveCalendars();
+      if (calendars.isSuccess && calendars.data!.isNotEmpty) {
+        Calendar calender = calendars.data!.first;
+        if (calender != null) {
+          _deviceCalendarPlugin
+              .createOrUpdateEvent(
+            Event(
+              calender.id,
+              eventId: eventId,
+              title: "Appointment",
+              description: "Meeting Tomorrow",
+              start: TZDateTime.from(
+                DateTime(2023, 10, 23, 4),
+                getLocation(await FlutterNativeTimezone
+                    .getLocalTimezone()), //"Africa/Cairo",
+              ),
+              end: TZDateTime.from(
+                DateTime(2023, 10, 23, 5),
+                getLocation(await FlutterNativeTimezone
+                    .getLocalTimezone()), //"Africa/Cairo",
+              ),
+              allDay: true,
+            ),
+          )
+              .then((result) {
+            setState(() {
+              _calenderID = calender.id.toString();
+              _eventID = result!.data.toString();
+              _updateStatus = true;
+            });
+          }).catchError((onError) {
+            print(onError.toString());
+          });
+        }
+      }
+    } else {
+      _updateStatus = false;
+      print(_updateStatus);
+    }
   }
 }

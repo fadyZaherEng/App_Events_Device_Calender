@@ -13,7 +13,8 @@ class HomeBodyContentWidget extends StatefulWidget {
     super.key,
     required this.deviceCalendarPlugin,
   });
- ///test
+
+  ///test
   @override
   State<HomeBodyContentWidget> createState() => _HomeBodyContentWidgetState();
 }
@@ -78,7 +79,6 @@ class _HomeBodyContentWidgetState extends State<HomeBodyContentWidget> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
             Text(
               removeStatus == true
                   ? "Event Remove Status is: $removeStatus"
@@ -130,5 +130,4 @@ class _HomeBodyContentWidgetState extends State<HomeBodyContentWidget> {
       ),
     );
   }
-
 }

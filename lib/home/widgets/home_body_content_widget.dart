@@ -39,7 +39,9 @@ class _HomeBodyContentWidgetState extends State<HomeBodyContentWidget> {
                   calenderID = eventModel.calenderId;
                   eventID = eventModel.eventId;
                 }
-                setState(() {});
+                setState(
+                  () {},
+                );
               },
               child: const Text(
                 "Add Event To Calender",

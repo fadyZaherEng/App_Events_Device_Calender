@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 
 class HomeBodyContentWidget extends StatefulWidget {
   final DeviceCalendarPlugin deviceCalendarPlugin;
-
+  //comment
   const HomeBodyContentWidget({
     super.key,
     required this.deviceCalendarPlugin,
   });
-
+ ///test
   @override
   State<HomeBodyContentWidget> createState() => _HomeBodyContentWidgetState();
 }
@@ -121,7 +121,7 @@ class _HomeBodyContentWidgetState extends State<HomeBodyContentWidget> {
               style: TextStyle(
                 fontWeight:
                     updateStatus == false ? FontWeight.normal : FontWeight.bold,
-                fontSize: updateStatus == false ? 13 : 16,
+                fontSize: updateStatus == false ? 14 : 16,
                 color: updateStatus == false ? Colors.grey : Colors.black,
               ),
             ),
@@ -130,4 +130,5 @@ class _HomeBodyContentWidgetState extends State<HomeBodyContentWidget> {
       ),
     );
   }
+
 }
